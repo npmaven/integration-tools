@@ -27,6 +27,18 @@ public class Package {
         return props.getProperty("version");
     }
 
+    public String getMainBowerName() {
+        String main = props.getProperty("main.bower");
+
+        // Strip leading ./ if there is one
+        if(main.startsWith("./")) main = main.substring(2);
+
+        // Strip .js off the end
+        main = main.substring(0, main.length()-3);
+
+        return main + "-" + getVersion() + ".js";
+    }
+
     private InputStream stream(String rsrc) {
         return cl.getResourceAsStream("META-INF/resources/org/npmaven/" + name + "/" + rsrc);
     }
