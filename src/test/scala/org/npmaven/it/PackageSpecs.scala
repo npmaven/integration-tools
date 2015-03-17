@@ -13,15 +13,19 @@ object PackageSpecs extends Specification {
     Source.fromInputStream(r, "utf-8").mkString
   }
 
+  // TODO: Could make this test suite take parameters and test against multiple packages
   "Package class" should {
     val angular = new Package("angular")
 
-    "have a name constructor/getter" in {
-      val name = angular.getName
-      name must be equalTo("angular")
+    "have a name getter" in {
+      angular.getName must be equalTo("angular")
     }
 
-    "get the angular version" in {
+    "have a resource root getter" in {
+      angular.getResourceRoot must be equalTo("META-INF/resources/org/npmaven/angular/")
+    }
+
+    "get the version" in {
       angular.getVersion must be equalTo("1.3.14")
     }
 

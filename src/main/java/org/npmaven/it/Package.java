@@ -9,6 +9,8 @@ import java.util.*;
  * Represents a js package delivered from `org.npmaven`.
  */
 public class Package {
+    public static final String RESOURCE_ROOT = "META-INF/resources/org/npmaven/";
+
     private final String name;
     private final ClassLoader cl;
     private final Properties props;
@@ -41,6 +43,10 @@ public class Package {
      */
     public String getName() {
         return name;
+    }
+
+    public String getResourceRoot() {
+        return RESOURCE_ROOT + name + '/';
     }
 
     /**
@@ -194,7 +200,7 @@ public class Package {
     }
 
     private InputStream stream(String rsrc) {
-        return cl.getResourceAsStream("META-INF/resources/org/npmaven/" + name + "/" + rsrc);
+        return cl.getResourceAsStream(getResourceRoot() + rsrc);
     }
 
     private byte[] bytes(InputStream in) {
