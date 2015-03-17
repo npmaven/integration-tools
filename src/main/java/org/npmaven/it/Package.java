@@ -4,16 +4,30 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.*;
-import java.util.regex.Pattern;
 
+/**
+ * Represents a js package delivered from `org.npmaven`.
+ */
 public class Package {
     private final String name;
     private final ClassLoader cl;
     private final Properties props;
 
+    /**
+     * Create a js package reference object with the given name and using the default `ClassLoader`.
+     * @param name Name of the package, ex `"angular"` or `"d3"`.
+     * @throws IOException if hell breaks loose.
+     */
     public Package(String name) throws IOException {
         this(name, Package.class.getClassLoader());
     }
+
+    /**
+     * Create a js package reference object with the given name and the given `ClassLoader`.
+     * @param name Name of the package, ex `"angular"` or `"d3"`.
+     * @param cl `ClassLoader` to use for finding the package resources.
+     * @throws IOException if hell breaks loose.
+     */
     public Package(String name, ClassLoader cl) throws IOException {
         this.name = name;
         this.cl = cl;
@@ -21,66 +35,134 @@ public class Package {
         props.load(stream("package.properties"));
     }
 
+    /**
+     * Gets the name supplied in the constructor.
+     * @return the name
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Gets the version of the js package currently in the classpath.
+     * @return the version
+     */
     public String getVersion() {
         return props.getProperty("version");
     }
 
+    /**
+     * Gets the main js name per Bower packaging dressed with the package version for proper browser cache utilization.
+     * @return the main js name
+     */
     public String getMainBowerName() {
         return getMainBowerPrefixVersioned() + ".js";
     }
 
+    /**
+     * Gets an `InputStream` to the main js file per Bower packaging
+     * @return the main js file
+     */
     public InputStream getMainBowerStream() {
         return stream(getMainBowerNameClean(".js"));
     }
 
+    /**
+     * Gets the byte array content from the main js file per Bower packaging
+     * @return the main js file
+     */
     public byte[] getMainBowerBytes() {
         return bytes(getMainBowerStream());
     }
 
+    /**
+     * Gets the String content from the main js file per Bower packaging
+     * @return the main js file
+     */
     public String getMainBowerString() {
         return bytesToString(getMainBowerBytes());
     }
 
+    /**
+     * Gets the minified main js name per Bower packaging dressed with the package version and suffixed with `min` as appropriate.
+     * @return the main min js name
+     */
     public String getMainBowerNameMin() {
         return getMainBowerPrefixVersioned() + ".min.js";
     }
 
+    /**
+     * Gets an `InputStream` to the minified main js file per Bower packaging
+     * @return the minified main js file
+     */
     public InputStream getMainBowerStreamMin() {
         return stream(getMainBowerNameClean(".min.js")); // TODO
     }
 
+    /**
+     * Gets the byte array content from the minified main js file per Bower packaging
+     * @return the minified main js file
+     */
     public byte[] getMainBowerBytesMin() {
         return bytes(getMainBowerStreamMin());
     }
 
+    /**
+     * Gets the String content from the minified main js file per Bower packaging
+     * @return the minified main js file
+     */
     public String getMainBowerStringMin() {
         return bytesToString(getMainBowerBytesMin());
     }
 
+    /**
+     * Gets the main js mapping file name per Bower packaging dressed with the package version and suffixed with `min.js.map` as appropriate.
+     * @return the main min js map name
+     */
     public String getMainBowerNameMap() {
         return getMainBowerPrefixVersioned() + ".min.js.map";
     }
 
+    /**
+     * Gets an `InputStream` to the main js mapping file per Bower packaging
+     * @return the main js mapping file
+     */
     public InputStream getMainBowerStreamMap() {
         return stream(getMainBowerNameClean(".min.js.map")); // TODO
     }
 
+    /**
+     * Gets the byte array content from the main js mapping file per Bower packaging
+     * @return the main js mapping file
+     */
     public byte[] getMainBowerBytesMap() {
         return bytes(getMainBowerStreamMap());
     }
 
+    /**
+     * Gets the String content from the main js mapping file per Bower packaging
+     * @return the main js mapping file
+     */
     public String getMainBowerStringMap() {
         return bytesToString(getMainBowerBytesMap());
     }
 
+    /**
+     * Gets the String content from the main js mapping file per Bower packaging, except with the referenced file
+     * names are dressed with the package version.
+     * @return the main js mapping file with contents substituted accordingly for versioning
+     */
     public String mainBowerStringMapWithVersions() {
         return getMainBowerStringMap(getMainBowerNameMin(), getMainBowerName());
     }
 
+    /**
+     * Gets the String content from the main js mapping file per Bower packaging, except with the referenced file
+     * names are specified in the arguments
+     * @param file the file name to be substituted (this one corresponds to the minified file name)
+     * @param src  the src name to be substituted (this one corresponds to the main file name)
+     * @return the main js mapping file with contents substituted accordingly
+     */
     public String getMainBowerStringMap(String file, String src) {
         String orig = bytesToString(getMainBowerBytesMap());
         String fileReplace = "\"file\":\""+file+"\",";
