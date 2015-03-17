@@ -1,4 +1,4 @@
-name := "npmaven-integration-tools"
+name := "integration-tools"
 
 version := "0.1.0-SNAPSHOT"
 
