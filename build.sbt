@@ -23,7 +23,8 @@ resolvers ++= Seq(
 
 libraryDependencies ++= Seq(
   "org.scala-lang" %  "scala-library" % scalaVersion.value % "test",
-  "org.specs2"     %% "specs2-core"   % "3.0"              % "test"
+  "org.specs2"     %% "specs2-core"   % "3.0"              % "test",
+  "org.npmaven"    %  "angular"       % "1.3.14"           % "test"
 )
 
 homepage := Some(url("http://docs.npmaven.org"))
