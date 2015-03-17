@@ -1,6 +1,8 @@
 package org.npmaven
 package it
 
+import java.io.{FileOutputStream, PrintStream}
+
 import org.specs2.mutable.Specification
 
 import scala.io.Source
@@ -45,6 +47,14 @@ object PackageSpecs extends Specification {
 
     "get the mainBowerStringMap" in {
       angular.getMainBowerStringMap must be equalTo(rsrc("META-INF/resources/org/npmaven/angular/angular.min.js.map"))
+    }
+
+    "get the mainBowerStringMap with substitutions" in {
+      angular.getMainBowerStringMap("angular-1.3.14.min.js", "angular-1.3.14.js") must be equalTo(rsrc("org/npmaven/artifacts/angular-1.3.14-with-source.min.js.map"))
+    }
+
+    "get the mainBowerStringMapWithVersions" in {
+      angular.mainBowerStringMapWithVersions must be equalTo(rsrc("org/npmaven/artifacts/angular-1.3.14-with-source.min.js.map"))
     }
   }
 }

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.*;
+import java.util.regex.Pattern;
 
 public class Package {
     private final String name;
@@ -74,6 +75,20 @@ public class Package {
 
     public String getMainBowerStringMap() {
         return bytesToString(getMainBowerBytesMap());
+    }
+
+    public String mainBowerStringMapWithVersions() {
+        return getMainBowerStringMap(getMainBowerNameMin(), getMainBowerName());
+    }
+
+    public String getMainBowerStringMap(String file, String src) {
+        String orig = bytesToString(getMainBowerBytesMap());
+        String fileReplace = "\"file\":\""+file+"\",";
+        String srcReplace =  "\"sources\":[\""+src+"\"],";
+
+        return orig
+            .replaceFirst("(?s)\\Q\"file\":\"" + getMainBowerNameClean(".min.js") + "\",\\E", fileReplace)
+            .replaceFirst("(?s)\\Q\"sources\":[\""+getMainBowerNameClean(".js")+"\"],\\E", srcReplace);
     }
 
     private String getMainBowerNameClean(String suffix) {
