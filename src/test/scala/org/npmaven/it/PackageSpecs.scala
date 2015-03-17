@@ -19,5 +19,13 @@ object PackageSpecs extends Specification {
     "get the mainBowerName" in {
       angular.getMainBowerName must be equalTo("angular-1.3.14.js")
     }
+
+    "get the mainBowerNameMin" in {
+      angular.getMainBowerNameMin must be equalTo("angular-1.3.14.min.js")
+    }
+
+    "get the mainBowerNameMap" in {
+      angular.getMainBowerNameMap must be equalTo("angular-1.3.14.min.js.map")
+    }
   }
 }

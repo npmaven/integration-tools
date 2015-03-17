@@ -28,6 +28,18 @@ public class Package {
     }
 
     public String getMainBowerName() {
+        return getMainBowerPrefix() + ".js";
+    }
+
+    public String getMainBowerNameMin() {
+        return getMainBowerPrefix() + ".min.js";
+    }
+
+    public String getMainBowerNameMap() {
+        return getMainBowerPrefix() + ".min.js.map";
+    }
+
+    public String getMainBowerPrefix() {
         String main = props.getProperty("main.bower");
 
         // Strip leading ./ if there is one
@@ -36,7 +48,7 @@ public class Package {
         // Strip .js off the end
         main = main.substring(0, main.length()-3);
 
-        return main + "-" + getVersion() + ".js";
+        return main + "-" + getVersion();
     }
 
     private InputStream stream(String rsrc) {
