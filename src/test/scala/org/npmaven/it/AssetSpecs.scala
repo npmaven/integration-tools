@@ -24,5 +24,17 @@ object AssetSpecs extends Specification with Fixtures {
     "get the versioned name of the Classifier.MAP resource" in {
       angular_js.getVersionedName(MAP) must be equalTo("angular-1.3.14.min.js.map")
     }
+
+    "get the Classifier.DEFAULT resource as a String" in {
+      angular_js.getRaw must be equalTo(rsrc("META-INF/resources/org/npmaven/angular/angular.js"))
+    }
+
+    "get the Classifier.MIN resource as a String" in {
+      angular_js.getRaw(MIN) must be equalTo(rsrc("META-INF/resources/org/npmaven/angular/angular.min.js"))
+    }
+
+    "get the Classifier.MAP resource as a String" in {
+      angular_js.getRaw(MAP) must be equalTo(rsrc("META-INF/resources/org/npmaven/angular/angular.min.js.map"))
+    }
   }
 }

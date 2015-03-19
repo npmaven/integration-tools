@@ -14,13 +14,21 @@ public class Asset {
     }
 
     public String getVersionedPrefix() {
-        String main = getNameClean("");
+        String main = getNameClean();
 
         return main + "-" + parent.getVersion();
     }
 
     public String getVersionedName(Classifier which) {
         return getVersionedPrefix()+getSuffix(which);
+    }
+
+    public String getRaw() {
+        return getRaw(Classifier.DEFAULT);
+    }
+
+    public String getRaw(Classifier which) {
+        return parent.string(getNameClean()+getSuffix(which));
     }
 
     private String getSuffix(Classifier which) {
@@ -32,7 +40,7 @@ public class Asset {
         }
     }
 
-    private String getNameClean(String suffix) {
+    private String getNameClean() {
         String main = name;
 
         // Strip leading ./ if there is one
@@ -40,8 +48,6 @@ public class Asset {
 
         // Strip .js off the end
         main = main.substring(0, main.length()-3);
-
-        main = main+suffix;
 
         return main;
     }

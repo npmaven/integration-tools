@@ -203,6 +203,10 @@ public class Package {
         return main + "-" + getVersion();
     }
 
+    String string(String rsrc) {
+        return bytesToString(bytes(stream(rsrc)));
+    }
+
     private InputStream stream(String rsrc) {
         return cl.getResourceAsStream(getResourceRoot() + rsrc);
     }
