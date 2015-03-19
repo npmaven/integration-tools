@@ -28,7 +28,19 @@ public class Asset {
     }
 
     public String getRaw(Classifier which) {
-        return parent.string(getNameClean()+getSuffix(which));
+        return parent.string(getNameClean() + getSuffix(which));
+    }
+
+    public String getWithAdjustedReferences(Classifier which) {
+        String orig = getRaw(which);
+        String file = getVersionedName(Classifier.MIN);
+        String src =  getVersionedName(Classifier.DEFAULT);
+        String fileReplace = "\"file\":\""+file+"\",";
+        String srcReplace =  "\"sources\":[\""+src+"\"],";
+
+        return orig
+                .replaceFirst("(?s)\\Q\"file\":\"" + getNameClean() + getSuffix(Classifier.MIN) + "\",\\E", fileReplace)
+                .replaceFirst("(?s)\\Q\"sources\":[\"" + getNameClean() + getSuffix(Classifier.DEFAULT) + "\"],\\E", srcReplace);
     }
 
     private String getSuffix(Classifier which) {

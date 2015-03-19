@@ -36,5 +36,9 @@ object AssetSpecs extends Specification with Fixtures {
     "get the Classifier.MAP resource as a String" in {
       angular_js.getRaw(MAP) must be equalTo(rsrc("META-INF/resources/org/npmaven/angular/angular.min.js.map"))
     }
+
+    "get the Classifier.MAP resource as a String with adjusted source references" in {
+      angular_js.getWithAdjustedReferences(MAP) must be equalTo(rsrc("org/npmaven/artifacts/angular-1.3.14-with-source.min.js.map"))
+    }
   }
 }
