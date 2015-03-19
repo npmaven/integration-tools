@@ -7,16 +7,9 @@ import org.specs2.mutable.Specification
 
 import scala.io.Source
 
-object PackageSpecs extends Specification {
-  def rsrc(name:String):String = {
-    val r = this.getClass.getClassLoader.getResourceAsStream(name)
-    Source.fromInputStream(r, "utf-8").mkString
-  }
-
+object PackageSpecs extends Specification with Fixtures {
   // TODO: Could make this test suite take parameters and test against multiple packages
   "Package class" should {
-    val angular = new Package("angular")
-
     "have a name getter" in {
       angular.getName must be equalTo("angular")
     }
