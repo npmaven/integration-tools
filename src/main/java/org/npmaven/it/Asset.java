@@ -60,7 +60,7 @@ public class Asset {
             case DEFAULT:   return ".js";
             case MIN:       return ".min.js";
             case MAP:       return ".min.js.map";
-            default:        return "This unreachable code exists to satisfy a poorly conceived compiler";
+            default:        assert false: "You added an enum in Classifier and didn't update me"; return null;
         }
     }
 
