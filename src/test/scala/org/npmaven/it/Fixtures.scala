@@ -11,7 +11,8 @@ trait Fixtures {
     Source.fromInputStream(r, "utf-8").mkString
   }
 
+  import Classifier._
   lazy val angular = new Package("angular")
-  lazy val angular_js = new Asset(angular, "angular")
+  lazy val angular_js = new Asset(angular, "angular", MAIN)
 
 }
