@@ -57,6 +57,10 @@ public class Package {
         return props.getProperty("version");
     }
 
+    public Asset getMain() {
+        return new Asset(this, getName());
+    }
+
     /**
      * Gets the main js name per Bower packaging dressed with the package version for proper browser cache utilization.
      * @return the main js name
