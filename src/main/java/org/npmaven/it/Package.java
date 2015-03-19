@@ -57,7 +57,7 @@ public class Package {
         return props.getProperty("version");
     }
 
-    public Asset getMain() {
+    public Asset getBowerMain() {
         return new Asset(this, props.getProperty("main.bower"));
     }
 
@@ -180,7 +180,7 @@ public class Package {
 
         return orig
             .replaceFirst("(?s)\\Q\"file\":\"" + getMainBowerNameClean(".min.js") + "\",\\E", fileReplace)
-            .replaceFirst("(?s)\\Q\"sources\":[\""+getMainBowerNameClean(".js")+"\"],\\E", srcReplace);
+            .replaceFirst("(?s)\\Q\"sources\":[\"" + getMainBowerNameClean(".js") + "\"],\\E", srcReplace);
     }
 
     private String getMainBowerNameClean(String suffix) {
