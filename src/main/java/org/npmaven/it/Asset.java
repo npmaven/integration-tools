@@ -32,15 +32,17 @@ public class Asset {
     }
 
     public String getWithAdjustedReferences(Classifier which) {
-        String orig = getRaw(which);
+        String src  = getVersionedName(Classifier.DEFAULT);
         String file = getVersionedName(Classifier.MIN);
-        String src =  getVersionedName(Classifier.DEFAULT);
+        String map  = getVersionedName(Classifier.MAP);
+        String srcReplace  = "\"sources\":[\""+src+"\"],";
         String fileReplace = "\"file\":\""+file+"\",";
-        String srcReplace =  "\"sources\":[\""+src+"\"],";
+        String mapReplace  = "//# sourceMappingURL="+map;
 
-        return orig
-                .replaceFirst("(?s)\\Q\"file\":\"" + getNameClean() + getSuffix(Classifier.MIN) + "\",\\E", fileReplace)
-                .replaceFirst("(?s)\\Q\"sources\":[\"" + getNameClean() + getSuffix(Classifier.DEFAULT) + "\"],\\E", srcReplace);
+        return getRaw(which)
+                .replaceFirst("(?s)\\Q\"sources\":[\""       + getNameClean() + getSuffix(Classifier.DEFAULT) + "\"],\\E", srcReplace)  // for source map json file
+                .replaceFirst("(?s)\\Q\"file\":\""           + getNameClean() + getSuffix(Classifier.MIN)     + "\",\\E",  fileReplace) // for source map json file
+                .replaceFirst("(?s)\\Q//# sourceMappingURL=" + getNameClean() + getSuffix(Classifier.MAP)     + "\\E",     mapReplace); // for minified js file
     }
 
     private String getSuffix(Classifier which) {
