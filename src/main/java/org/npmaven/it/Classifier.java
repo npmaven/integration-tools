@@ -8,6 +8,6 @@ public enum Classifier {
     DEFAULT,
     /** The MIN asset classifier is for the minified resource if available */
     MIN,
-    /** The MAP asset classifier is for the minified map resource if available */
+    /** The MAP asset classifier is for the source map resource if available */
     MAP,
 }
