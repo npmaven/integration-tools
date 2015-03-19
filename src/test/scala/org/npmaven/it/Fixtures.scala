@@ -13,6 +13,6 @@ trait Fixtures {
 
   import Classifier._
   lazy val angular = new Package("angular")
-  lazy val angular_js = new Asset(angular, "angular", MAIN)
+  lazy val angular_js = new Asset(angular, "angular", DEFAULT)
 
 }
