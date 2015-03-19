@@ -9,7 +9,7 @@ public class Asset {
         this.name = name;
     }
 
-    public String getName() {
+    public String getRawName() {
         return name;
     }
 

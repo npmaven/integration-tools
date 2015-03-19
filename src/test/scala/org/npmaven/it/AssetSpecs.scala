@@ -5,8 +5,8 @@ import Classifier._
 
 object AssetSpecs extends Specification with Fixtures {
   "Asset class" should {
-    "have a name getter" in {
-      angular_js.getName must be equalTo ("./angular.js")
+    "have a raw name getter" in {
+      angular_js.getRawName must be equalTo ("./angular.js")
     }
 
     "get the versioned prefix" in {
