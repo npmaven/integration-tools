@@ -32,17 +32,27 @@ public class Asset {
     }
 
     public String getWithAdjustedReferences(Classifier which) {
-        String src  = getVersionedName(Classifier.DEFAULT);
-        String file = getVersionedName(Classifier.MIN);
-        String map  = getVersionedName(Classifier.MAP);
-        String srcReplace  = "\"sources\":[\""+src+"\"],";
-        String fileReplace = "\"file\":\""+file+"\",";
-        String mapReplace  = "//# sourceMappingURL="+map;
+        String raw = getRaw(which);
 
-        return getRaw(which)
-                .replaceFirst("(?s)\\Q\"sources\":[\""       + getNameClean() + getSuffix(Classifier.DEFAULT) + "\"],\\E", srcReplace)  // for source map json file
-                .replaceFirst("(?s)\\Q\"file\":\""           + getNameClean() + getSuffix(Classifier.MIN)     + "\",\\E",  fileReplace) // for source map json file
-                .replaceFirst("(?s)\\Q//# sourceMappingURL=" + getNameClean() + getSuffix(Classifier.MAP)     + "\\E",     mapReplace); // for minified js file
+        if(raw != null) {
+            String src = getVersionedName(Classifier.DEFAULT);
+            String srcRegex = "(?s)\\Q\"sources\":[\"" + getNameClean() + getSuffix(Classifier.DEFAULT) + "\"],\\E";
+            String srcReplace = "\"sources\":[\"" + src + "\"],";
+            String file = getVersionedName(Classifier.MIN);
+            String fileRegex = "(?s)\\Q\"file\":\"" + getNameClean() + getSuffix(Classifier.MIN) + "\",\\E";
+            String fileReplace = "\"file\":\"" + file + "\",";
+            String map = getVersionedName(Classifier.MAP);
+            String mapRegex = "(?s)\\Q//# sourceMappingURL=" + getNameClean() + getSuffix(Classifier.MAP) + "\\E";
+            String mapReplace = "//# sourceMappingURL=" + map;
+
+            return raw
+                    .replaceFirst(srcRegex, srcReplace)  // for source map json file
+                    .replaceFirst(fileRegex, fileReplace) // for source map json file
+                    .replaceFirst(mapRegex, mapReplace); // for minified js file
+        }
+        else {
+            return null;
+        }
     }
 
     private String getSuffix(Classifier which) {

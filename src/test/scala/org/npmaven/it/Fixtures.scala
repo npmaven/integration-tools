@@ -14,5 +14,6 @@ trait Fixtures {
   import Classifier._
   lazy val angular = new Package("angular")
   lazy val angular_js = angular.getBowerMain
+  lazy val angular_index_js = angular.getNpmMain
 
 }

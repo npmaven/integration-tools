@@ -61,6 +61,10 @@ public class Package {
         return new Asset(this, props.getProperty("main.bower"));
     }
 
+    public Asset getNpmMain() {
+        return new Asset(this, props.getProperty("main.npm"));
+    }
+
     String string(String rsrc) {
         return bytesToString(bytes(stream(rsrc)));
     }
@@ -70,37 +74,47 @@ public class Package {
     }
 
     private byte[] bytes(InputStream in) {
-        Map<byte[],Integer> bytes = new LinkedHashMap<byte[], Integer>();
-        final int SIZE = 1024;
-        byte[] buffer = new byte[SIZE];
-        int total = 0;
+        if(in != null) {
+            Map<byte[], Integer> bytes = new LinkedHashMap<byte[], Integer>();
+            final int SIZE = 1024;
+            byte[] buffer = new byte[SIZE];
+            int total = 0;
 
-        try {
-            for(int read = in.read(buffer); read > 0; read = in.read(buffer)) {
-                bytes.put(buffer, read);
-                buffer = new byte[SIZE];
-                total += read;
+            try {
+                for (int read = in.read(buffer); read > 0; read = in.read(buffer)) {
+                    bytes.put(buffer, read);
+                    buffer = new byte[SIZE];
+                    total += read;
+                }
+            } catch (IOException e) {
+                return new byte[0];
             }
-        } catch (IOException e) {
-            return new byte[0];
-        }
 
-        byte[] result = new byte[total];
-        int offset = 0;
-        for(Map.Entry<byte[], Integer> entry : bytes.entrySet()) {
-            byte[] bs = entry.getKey();
-            int length = entry.getValue();
-            System.arraycopy(bs, 0, result, offset, length);
-            offset += length;
-        }
+            byte[] result = new byte[total];
+            int offset = 0;
+            for (Map.Entry<byte[], Integer> entry : bytes.entrySet()) {
+                byte[] bs = entry.getKey();
+                int length = entry.getValue();
+                System.arraycopy(bs, 0, result, offset, length);
+                offset += length;
+            }
 
-        return result;
+            return result;
+        }
+        else {
+            return null;
+        }
     }
 
     private String bytesToString(byte[] bytes) {
-        try {
-            return new String(bytes, "utf-8");
-        } catch (UnsupportedEncodingException e) {
+        if(bytes != null) {
+            try {
+                return new String(bytes, "utf-8");
+            } catch (UnsupportedEncodingException e) {
+                return null;
+            }
+        }
+        else {
             return null;
         }
     }
