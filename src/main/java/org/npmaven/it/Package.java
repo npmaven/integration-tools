@@ -58,7 +58,7 @@ public class Package {
     }
 
     public Asset getMain() {
-        return new Asset(this, getName());
+        return new Asset(this, props.getProperty("main.bower"));
     }
 
     /**
