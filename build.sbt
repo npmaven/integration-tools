@@ -18,7 +18,8 @@ javacOptions in (Compile,compile) ++= Seq("-source", "1.6", "-target", "1.6", "-
 
 resolvers ++= Seq(
   "snapshots" at "https://oss.sonatype.org/content/repositories/snapshots",
-  "releases"  at "https://oss.sonatype.org/content/repositories/releases"
+  "releases"  at "https://oss.sonatype.org/content/repositories/releases",
+  "local-npmaven" at "http://localhost:8080/repo/npm"
 )
 
 libraryDependencies ++= Seq(
