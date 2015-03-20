@@ -17,9 +17,10 @@ scalacOptions in Test ++= Seq("-Yrangepos") // Recommended for specs2 3.0
 javacOptions in (Compile,compile) ++= Seq("-source", "1.6", "-target", "1.6", "-g")
 
 resolvers ++= Seq(
-  "snapshots"   at "https://oss.sonatype.org/content/repositories/snapshots",
-  "releases"    at "https://oss.sonatype.org/content/repositories/releases",
-  "npmaven-dev" at "http://dev.npmaven.org/repo/npm"
+  "snapshots"      at "https://oss.sonatype.org/content/repositories/snapshots",
+  "releases"       at "https://oss.sonatype.org/content/repositories/releases",
+  "scalaz-bintray" at "http://dl.bintray.com/scalaz/releases", // For specs2 3.0
+  "npmaven-dev"    at "http://dev.npmaven.org/repo/npm"
 )
 
 libraryDependencies ++= Seq(
