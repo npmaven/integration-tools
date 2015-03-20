@@ -58,11 +58,11 @@ public class Package {
     }
 
     public Asset getBowerMain() {
-        return new Asset(this, props.getProperty("main.bower"));
+        return new Asset(this, props.getProperty("bower.main"));
     }
 
     public Asset getNpmMain() {
-        return new Asset(this, props.getProperty("main.npm"));
+        return new Asset(this, props.getProperty("main"));
     }
 
     String string(String rsrc) {
