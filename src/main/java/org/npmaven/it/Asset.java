@@ -32,18 +32,22 @@ public class Asset {
     }
 
     public String getWithAdjustedReferences(Classifier which) {
+        return getWithAdjustedReferences(which, "");
+    }
+
+    public String getWithAdjustedReferences(Classifier which, String prefix) {
         String raw = getRaw(which);
 
         if(raw != null) {
             String src = getVersionedName(Classifier.DEFAULT);
             String srcRegex = "(?s)\\Q\"sources\":[\"" + getNameClean() + getSuffix(Classifier.DEFAULT) + "\"],\\E";
-            String srcReplace = "\"sources\":[\"" + src + "\"],";
+            String srcReplace = "\"sources\":[\"" + prefix + src + "\"],";
             String file = getVersionedName(Classifier.MIN);
             String fileRegex = "(?s)\\Q\"file\":\"" + getNameClean() + getSuffix(Classifier.MIN) + "\",\\E";
-            String fileReplace = "\"file\":\"" + file + "\",";
+            String fileReplace = "\"file\":\"" + prefix + file + "\",";
             String map = getVersionedName(Classifier.MAP);
             String mapRegex = "(?s)\\Q//# sourceMappingURL=" + getNameClean() + getSuffix(Classifier.MAP) + "\\E";
-            String mapReplace = "//# sourceMappingURL=" + map;
+            String mapReplace = "//# sourceMappingURL=" + prefix + map;
 
             return raw
                     .replaceFirst(srcRegex, srcReplace)  // for source map json file

@@ -44,6 +44,14 @@ object AssetSpecs extends Specification with Fixtures {
     "get the Classifier.MAP resource as a String with adjusted source references" in {
       angular_js.getWithAdjustedReferences(MAP) must be equalTo(rsrc("org/npmaven/artifacts/angular-1.3.14-with-source.min.js.map"))
     }
+
+    "get the Classifier.MIN resource as a String with adjusted source references and a prefix" in {
+      angular_js.getWithAdjustedReferences(MIN, "scripts/") must be equalTo(rsrc("org/npmaven/artifacts/angular-1.3.14-with-source-prefix.min.js"))
+    }
+
+    "get the Classifier.MAP resource as a String with adjusted source references and a prefix" in {
+      angular_js.getWithAdjustedReferences(MAP, "scripts/") must be equalTo(rsrc("org/npmaven/artifacts/angular-1.3.14-with-source-prefix.min.js.map"))
+    }
   }
 
   // Several of the method calls here are not reasonable things to do, but we should have the behavior spec'd.
